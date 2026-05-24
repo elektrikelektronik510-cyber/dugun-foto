@@ -25,22 +25,18 @@ box-shadow:0 0 20px rgba(0,0,0,0.15);
 text-align:center;
 }
 
-h1{
-margin-bottom:10px;
-}
-
-.upload-btn{
-display:block;
+.upload{
 padding:25px;
 margin-top:25px;
 background:#f0e6d8;
 border-radius:15px;
 font-size:24px;
 cursor:pointer;
-text-decoration:none;
-color:black;
 }
 
+input{
+display:none;
+}
 </style>
 </head>
 
@@ -52,12 +48,11 @@ color:black;
 
 <p>Anılarınızı bizimle paylaşın ❤️</p>
 
-<a class="upload-btn"
-href="https://docs.google.com/forms/d/e/1FAIpQLSc5G34QSYLdnrh7kaNhkny5_BCGiGhljMNtCtlYGe4ZtXPshg/viewform">
-
+<label class="upload">
 📷 Fotoğraf Yükle
-
-</a>
+<input type="file" accept="image/*" capture="environment"
+onchange="window.location='https://docs.google.com/forms/d/e/1FAIpQLSc5G34QSYLdnrh7kaNhkny5_BCGiGhljMNtCtlYGe4ZtXPshg/viewform'">
+</label>
 
 </div>
 
