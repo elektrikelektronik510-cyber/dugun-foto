@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ahmet & Berfin Düğün Albümü</title>
+
+<title>Ahmet & Feyza Düğün Albümü</title>
 
 <style>
+
 body{
 margin:0;
 font-family:Arial,sans-serif;
@@ -26,32 +29,54 @@ text-align:center;
 }
 
 .upload{
-padding:25px;
-margin-top:25px;
+display:block;
+padding:20px;
+margin-top:20px;
 background:#f0e6d8;
 border-radius:15px;
-font-size:24px;
+font-size:22px;
 cursor:pointer;
 }
 
 input{
 display:none;
 }
+
 </style>
+
 </head>
 
 <body>
 
 <div class="card">
 
-<h1>💍 Ahmet & Berfin</h1>
+<h1>💍 Ahmet & Feyza</h1>
 
-<p>Anılarınızı bizimle paylaşın ❤️</p>
+<p style="margin-bottom:50px;">
+Anılarınızı bizimle paylaşın ❤️
+</p>
 
 <label class="upload">
-📷 Fotoğraf Yükle
-<input type="file" accept="image/*" capture="environment"
+
+📷 Fotoğraf Çek
+
+<input
+type="file"
+accept="image/*"
+capture="environment"
 onchange="window.location='https://docs.google.com/forms/d/e/1FAIpQLSc5G34QSYLdnrh7kaNhkny5_BCGiGhljMNtCtlYGe4ZtXPshg/viewform'">
+
+</label>
+
+<label class="upload">
+
+🖼️ Galeriden Seç
+
+<input
+type="file"
+accept="image/*"
+onchange="window.location='https://docs.google.com/forms/d/e/1FAIpQLSc5G34QSYLdnrh7kaNhkny5_BCGiGhljMNtCtlYGe4ZtXPshg/viewform'">
+
 </label>
 
 </div>
