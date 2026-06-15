@@ -39,7 +39,7 @@ padding:18px 25px;
 background:#e8dfd2;
 border-radius:15px;
 cursor:pointer;
-font-size:24px;
+font-size:22px;
 }
 
 input{
@@ -49,7 +49,6 @@ display:none;
 #sonuc{
 margin-top:20px;
 font-weight:bold;
-color:green;
 }
 </style>
 </head>
@@ -63,11 +62,10 @@ color:green;
 <p>Anılarınızı bizimle paylaşın ❤️</p>
 
 <label class="upload-btn">
-📷 Fotoğraf Çek / Galeriden Seç
+📷 Fotoğraf Çek / 🖼️ Galeriden Seç
 <input
 type="file"
 accept="image/*"
-capture="environment"
 onchange="yukle(this.files[0])">
 </label>
 
@@ -79,15 +77,18 @@ onchange="yukle(this.files[0])">
 
 async function yukle(file){
 
-document.getElementById("sonuc").innerHTML="Yükleniyor...";
+document.getElementById("sonuc").innerHTML =
+"⏳ Fotoğraf yükleniyor...";
 
-const reader=new FileReader();
+const reader = new FileReader();
 
-reader.onload=async function(){
+reader.onload = async function(){
 
-const base64=reader.result.split(",")[1];
+try{
 
-const response=await fetch(
+const base64 = reader.result.split(",")[1];
+
+await fetch(
 "https://script.google.com/macros/s/AKfycbzP2L0uF-wYAjPXDTAmPZCVl17p-8uszDXBEpHKLbW9ah7_1uhqIRKrqgUUojhFYB6Ggw/exec",
 {
 method:"POST",
@@ -97,11 +98,23 @@ image:base64
 }
 );
 
-document.getElementById("sonuc").innerHTML=
+document.getElementById("sonuc").innerHTML =
 "✅ Fotoğraf başarıyla yüklendi";
+
+}
+catch(error){
+
+document.getElementById("sonuc").innerHTML =
+"❌ Yükleme hatası oluştu";
+
+console.error(error);
+
+}
+
 };
 
 reader.readAsDataURL(file);
+
 }
 
 </script>
