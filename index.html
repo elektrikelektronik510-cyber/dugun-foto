@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -23,6 +24,14 @@ body{
     border-radius:20px;
     box-shadow:0 0 20px rgba(0,0,0,0.15);
     text-align:center;
+}
+
+h1{
+    margin-bottom:15px;
+}
+
+p{
+    margin-bottom:30px;
 }
 
 .upload{
@@ -67,39 +76,45 @@ input{
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbzP2L0uF-wYAjPXDTAmPZCVl17p-8uszDXBEpHKLbW9ah7_1uhqIRKrqgUUojhFYB6Ggw/exec";
 
-document.getElementById("fileInput").addEventListener("change", async (e) => {
+document.getElementById("fileInput").addEventListener("change", async function(e){
 
     const file = e.target.files[0];
-    if (!file) return;
+
+    if(!file) return;
 
     document.getElementById("status").innerHTML =
     "⏳ Fotoğraf yükleniyor...";
 
     const reader = new FileReader();
 
-    reader.onload = async () => {
+    reader.onload = async function(){
 
         const base64 = reader.result.split(",")[1];
 
-        try {
+        try{
 
-            await fetch(SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                body: JSON.stringify({
-                    image: base64
-                })
-            });
+            await fetch(
+                SCRIPT_URL,
+                {
+                    method: "POST",
+                    mode: "no-cors",
+                    body: JSON.stringify({
+                        image: base64
+                    })
+                }
+            );
 
             document.getElementById("status").innerHTML =
             "✅ Fotoğraf gönderildi";
 
-        } catch (err) {
+        }
+        catch(error){
 
-            console.error(err);
+            console.error(error);
 
             document.getElementById("status").innerHTML =
-            "❌ Hata: " + err.message;
+            "❌ Hata: " + error.message;
+
         }
 
     };
@@ -112,3 +127,4 @@ document.getElementById("fileInput").addEventListener("change", async (e) => {
 
 </body>
 </html>
+```
