@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ahmet & Feyza Düğün Albümü</title>
+<title>Feyza & Doğan Düğün Albümü</title>
 
 <style>
 body{
@@ -23,14 +23,6 @@ body{
     border-radius:20px;
     box-shadow:0 0 20px rgba(0,0,0,0.15);
     text-align:center;
-}
-
-h1{
-    margin-bottom:15px;
-}
-
-p{
-    margin-bottom:30px;
 }
 
 .upload{
@@ -57,7 +49,7 @@ input{
 
 <div class="card">
 
-<h1>💍 Ahmet & Feyza</h1>
+<h1>💍 Feyza & Doğan</h1>
 
 <p>Anılarınızı bizimle paylaşın ❤️</p>
 
@@ -72,50 +64,46 @@ input{
 
 <script>
 
-document.getElementById("fileInput").addEventListener("change", async function(e){
+const SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbzP2L0uF-wYAjPXDTAmPZCVl17p-8uszDXBEpHKLbW9ah7_1uhqIRKrqgUUojhFYB6Ggw/exec";
+
+document.getElementById("fileInput").addEventListener("change", async (e) => {
 
     const file = e.target.files[0];
-
-    if(!file) return;
+    if (!file) return;
 
     document.getElementById("status").innerHTML =
     "⏳ Fotoğraf yükleniyor...";
 
     const reader = new FileReader();
 
-    reader.onload = async function(){
+    reader.onload = async () => {
 
         const base64 = reader.result.split(",")[1];
 
-        try{
+        try {
 
-            const response = await fetch(
-                "https://script.google.com/macros/s/AKfycbzP2L0uF-wYAjPXDTAmPZCVl17p-8uszDXBEpHKLbW9ah7_1uhqIRKrqgUUojhFYB6Ggw/exec",
-                {
-                    method: "POST",
-                    body: JSON.stringify({
-                        image: base64
-                    })
-                }
-            );
+            const response = await fetch(SCRIPT_URL, {
+                method: "POST",
+                body: JSON.stringify({
+                    image: base64
+                })
+            });
 
-            const result = await response.text();
+            const text = await response.text();
 
-            console.log(result);
+            console.log(text);
 
             document.getElementById("status").innerHTML =
             "✅ Fotoğraf başarıyla yüklendi";
 
-        }
-        catch(error){
+        } catch (err) {
 
-            console.error(error);
+            console.error(err);
 
             document.getElementById("status").innerHTML =
-            "❌ Bağlantı hatası";
-
+            "❌ Hata: " + err.message;
         }
-
     };
 
     reader.readAsDataURL(file);
