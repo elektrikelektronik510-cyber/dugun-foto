@@ -93,18 +93,15 @@ document.getElementById("fileInput").addEventListener("change", async function(e
                 "https://script.google.com/macros/s/AKfycbzP2L0uF-wYAjPXDTAmPZCVl17p-8uszDXBEpHKLbW9ah7_1uhqIRKrqgUUojhFYB6Ggw/exec",
                 {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
                     body: JSON.stringify({
                         image: base64
                     })
                 }
             );
 
-            const text = await response.text();
+            const result = await response.text();
 
-            console.log(text);
+            console.log(result);
 
             document.getElementById("status").innerHTML =
             "✅ Fotoğraf başarıyla yüklendi";
