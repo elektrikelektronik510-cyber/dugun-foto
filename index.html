@@ -3,54 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Ahmet & Feyza Düğün Albümü</title>
 
 <style>
 body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#f7f4f0;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f7f4f0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
 }
 
 .card{
-width:350px;
-background:white;
-padding:30px;
-border-radius:20px;
-box-shadow:0 0 20px rgba(0,0,0,0.15);
-text-align:center;
+    width:350px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 0 20px rgba(0,0,0,0.15);
+    text-align:center;
 }
 
 h1{
-margin-bottom:20px;
+    margin-bottom:15px;
 }
 
 p{
-margin-bottom:30px;
+    margin-bottom:30px;
 }
 
 .upload{
-display:inline-block;
-padding:20px 30px;
-background:#e6dccf;
-border-radius:15px;
-font-size:28px;
-cursor:pointer;
+    display:inline-block;
+    padding:20px 25px;
+    background:#e6dccf;
+    border-radius:15px;
+    font-size:22px;
+    cursor:pointer;
 }
 
 input{
-display:none;
+    display:none;
 }
 
 #status{
-margin-top:20px;
-font-weight:bold;
-color:green;
+    margin-top:20px;
+    font-weight:bold;
 }
 </style>
 </head>
@@ -64,11 +62,11 @@ color:green;
 <p>Anılarınızı bizimle paylaşın ❤️</p>
 
 <label class="upload">
-📷 Fotoğraf Çek / Galeriden Seç
+📷 Fotoğraf Çek / 🖼️ Galeriden Seç
 <input type="file" id="fileInput" accept="image/*">
 </label>
 
-<p id="status"></p>
+<div id="status"></div>
 
 </div>
 
@@ -76,50 +74,54 @@ color:green;
 
 document.getElementById("fileInput").addEventListener("change", async function(e){
 
-const file = e.target.files[0];
+    const file = e.target.files[0];
 
-if(!file) return;
+    if(!file) return;
 
-document.getElementById("status").innerHTML = "Yükleniyor...";
+    document.getElementById("status").innerHTML =
+    "⏳ Fotoğraf yükleniyor...";
 
-const reader = new FileReader();
+    const reader = new FileReader();
 
-reader.onload = async function(){
+    reader.onload = async function(){
 
-const base64 = reader.result.split(",")[1];
+        const base64 = reader.result.split(",")[1];
 
-try{
+        try{
 
-const response = await fetch(
-"https://script.google.com/macros/s/AKfycbzP2L0uF-wYAjPXDTAmPZCVl17p-8uszDXBEpHKLbW9ah7_1uhqIRKrqgUUojhFYB6Ggw/exec",
-{
-method:"POST",
-body:JSON.stringify({
-image:base64
-})
-}
-);
+            const response = await fetch(
+                "https://script.google.com/macros/s/AKfycbzP2L0uF-wYAjPXDTAmPZCVl17p-8uszDXBEpHKLbW9ah7_1uhqIRKrqgUUojhFYB6Ggw/exec",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        image: base64
+                    })
+                }
+            );
 
-const result = await response.json();
+            const text = await response.text();
 
-if(result.success){
-document.getElementById("status").innerHTML =
-"✅ Fotoğraf başarıyla yüklendi";
-}else{
-document.getElementById("status").innerHTML =
-"❌ Yükleme hatası";
-}
+            console.log(text);
 
-}catch(error){
+            document.getElementById("status").innerHTML =
+            "✅ Fotoğraf başarıyla yüklendi";
 
-document.getElementById("status").innerHTML =
-"❌ Bağlantı hatası";
+        }
+        catch(error){
 
-}
+            console.error(error);
 
-};
+            document.getElementById("status").innerHTML =
+            "❌ Bağlantı hatası";
 
-reader.readAsDataURL(file);
+        }
+
+    };
+
+    reader.readAsDataURL(file);
 
 });
 
